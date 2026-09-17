@@ -1,0 +1,19 @@
+{
+  "name": "The Dark Chronicles — RetroAvia",
+  "short_name": "Dark Chronicles",
+  "description": "Attraversa otto dimensioni digitali corrotte, raccogli i cristalli e sblocca codici sconto reali per RetroAvia.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "landscape",
+  "background_color": "#050508",
+  "theme_color": "#050508",
+  "lang": "it",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
