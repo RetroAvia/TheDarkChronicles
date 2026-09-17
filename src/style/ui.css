@@ -1,0 +1,1012 @@
+/* ---------- shared primitives ---------- */
+
+.ra-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 48px);
+  background: radial-gradient(ellipse at 50% 30%, rgba(20, 20, 40, 0.55), rgba(3, 3, 8, 0.92) 75%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: ra-fade-in 0.35s var(--ease-smooth) both;
+}
+
+.ra-panel {
+  position: relative;
+  z-index: 1;
+  width: min(560px, 100%);
+  max-height: min(88vh, 780px);
+  overflow-y: auto;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(20px, 4vw, 40px);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.02), 0 20px 60px rgba(0,0,0,0.55), 0 0 40px -12px var(--dim-primary);
+  animation: ra-rise-in 0.5s var(--ease-out-back) both;
+}
+
+.ra-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: #fff;
+  animation: ra-title-glow 3.6s ease-in-out infinite;
+}
+
+.ra-eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--dim-primary);
+  text-align: center;
+  opacity: 0.85;
+  margin: 0 0 6px;
+}
+
+.ra-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 22px;
+  margin: 7px 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  cursor: pointer;
+  transition: transform 0.18s var(--ease-out-back), box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ra-btn--link { text-decoration: none; }
+.ra-btn--quiet { font-size: 0.75rem; opacity: 0.65; }
+.ra-btn--quiet:hover { opacity: 1; }
+.ra-btn:focus-visible,
+.ra-quiz-answer:focus-visible,
+.ra-class-card:focus-visible,
+.ra-map-node:focus-visible,
+.ra-code-action:focus-visible,
+.ra-hud-pause:focus-visible {
+  outline: 2px solid var(--dim-primary);
+  outline-offset: 3px;
+}
+.ra-btn:hover { transform: translateY(-2px); border-color: var(--dim-primary); box-shadow: 0 10px 24px -10px var(--dim-primary); }
+.ra-btn:active { transform: translateY(0) scale(0.98); }
+
+.ra-btn--primary {
+  background: linear-gradient(135deg, var(--dim-primary), var(--dim-secondary));
+  border-color: transparent;
+  color: #05050a;
+  box-shadow: 0 10px 30px -10px var(--dim-primary);
+}
+.ra-btn--primary:hover { box-shadow: 0 14px 38px -8px var(--dim-primary); }
+
+.ra-btn--ghost { background: transparent; border-color: var(--glass-border); }
+.ra-btn--danger { border-color: var(--neon-red); color: var(--neon-red); }
+
+.ra-btn--icon { width: 46px; height: 46px; padding: 0; border-radius: 50%; flex: none; }
+
+.ra-row { display: flex; gap: 10px; }
+.ra-row > .ra-btn { width: auto; flex: 1; }
+
+.ra-text { font-family: var(--font-body); font-size: 1rem; line-height: 1.55; color: var(--text-dim); }
+
+/* ---------- main menu ---------- */
+
+.ra-menu-logo {
+  font-size: clamp(1.8rem, 7vw, 2.6rem);
+  margin-bottom: 4px;
+}
+.ra-menu-tagline {
+  text-align: center;
+  color: var(--text-dim);
+  margin: 0 0 26px;
+  font-size: 0.95rem;
+}
+.ra-menu-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(45deg, rgba(228,64,95,0.16), rgba(131,58,180,0.16));
+  border: 1px solid rgba(228,64,95,0.35);
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+.ra-menu-social:hover { filter: brightness(1.15); }
+
+.ra-progress-strip {
+  display: flex;
+  gap: 6px;
+  margin: 18px 0 22px;
+}
+.ra-progress-dot {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
+}
+.ra-progress-dot.done { background: linear-gradient(90deg, var(--neon-green), var(--neon-blue)); }
+.ra-progress-dot.current { background: linear-gradient(90deg, var(--dim-primary), var(--dim-secondary)); }
+
+/* ---------- dimension map (replaces the plain progress strip) ---------- */
+
+.ra-map {
+  margin: 16px 0 22px;
+  padding: 14px 10px 8px;
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--glass-border);
+}
+.ra-map-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 4px 2px 10px;
+  /* 8 nodes at 40px plus 7 links at 22px came to 474px inside a ~460px
+     track, so the last dimension was permanently clipped off the right
+     edge. Nodes and links now shrink to fit instead of overflowing. */
+  flex-wrap: nowrap;
+}
+.ra-map-node-wrap {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+.ra-map-node {
+  flex: 0 1 auto;
+  width: clamp(28px, 7.5vw, 38px);
+  height: clamp(28px, 7.5vw, 38px);
+  padding: 0;
+  cursor: default;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(0.75rem, 2.4vw, 1rem);
+  font-family: var(--font-display);
+  font-weight: 700;
+  background: rgba(255,255,255,0.06);
+  border: 2px solid var(--glass-border);
+  color: var(--text-dim);
+  position: relative;
+  transition: transform 0.2s var(--ease-out-back), box-shadow 0.2s ease;
+}
+button.ra-map-node { cursor: pointer; }
+button.ra-map-node:hover { transform: scale(1.12); }
+.ra-map-node.selected {
+  border-color: #fff;
+  box-shadow: 0 0 0 3px var(--dim-primary), 0 0 18px -2px var(--dim-primary);
+}
+.ra-map-node.current.selected { transform: scale(1.14); }
+.ra-map-node.done {
+  background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+  border-color: transparent;
+  color: #05050a;
+}
+.ra-map-node.current {
+  background: linear-gradient(135deg, var(--dim-primary), var(--dim-secondary));
+  border-color: #fff;
+  color: #05050a;
+  transform: scale(1.14);
+  box-shadow: 0 0 16px -2px var(--dim-primary);
+}
+.ra-map-node.locked { opacity: 0.4; }
+.ra-map-node.reward {
+  box-shadow: 0 0 0 3px rgba(255,210,63,0.35);
+}
+.ra-map-link {
+  flex: 1 1 auto;
+  min-width: 6px;
+  max-width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.12);
+}
+.ra-map-link.done { background: linear-gradient(90deg, var(--neon-green), var(--neon-blue)); }
+.ra-map-caption {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  letter-spacing: 0.03em;
+  margin: 2px 0 0;
+}
+
+/* ---------- class selection ---------- */
+
+.ra-class-label {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: center;
+  margin: 4px 0 8px;
+}
+.ra-class-grid {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 18px;
+  flex-wrap: wrap;
+}
+.ra-class-card {
+  flex: 1 1 30%;
+  min-width: 96px;
+  padding: 12px 8px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--glass-border);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-primary);
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.18s var(--ease-out-back), border-color 0.2s ease, background 0.2s ease;
+}
+.ra-class-card:hover { transform: translateY(-2px); border-color: var(--dim-primary); }
+.ra-class-card.selected {
+  border-color: var(--dim-primary);
+  background: linear-gradient(160deg, rgba(139,92,246,0.22), rgba(255,255,255,0.03));
+  box-shadow: 0 0 0 1px var(--dim-primary), 0 10px 24px -12px var(--dim-primary);
+}
+.ra-class-icon { font-size: 1.6rem; display: block; margin-bottom: 4px; }
+.ra-class-name { font-family: var(--font-display); font-weight: 800; font-size: 0.85rem; display: block; }
+.ra-class-tagline { font-size: 0.68rem; color: var(--text-dim); display: block; margin-top: 2px; line-height: 1.3; }
+
+/* ---------- HUD ---------- */
+
+.ra-hud {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: max(12px, env(safe-area-inset-top)) 16px 0;
+  font-family: var(--font-display);
+  z-index: 5;
+}
+.ra-hud-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+}
+.ra-hud-energy { display: flex; gap: 5px; }
+.ra-energy-orb {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, var(--neon-red) 60%, #7a0000 100%);
+  box-shadow: 0 0 10px var(--neon-red);
+}
+.ra-energy-orb.empty { background: rgba(255,255,255,0.08); box-shadow: none; }
+
+.ra-hud-crystals { display: flex; align-items: center; gap: 6px; font-size: 0.95rem; color: var(--neon-cyan); }
+.ra-hud-level { font-size: 0.8rem; color: var(--text-dim); letter-spacing: 0.08em; }
+.ra-hud-score { font-size: 0.95rem; color: var(--neon-green); }
+
+.ra-hud-pause {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  color: #fff; font-size: 1.1rem;
+}
+
+/* ---------- story overlay ---------- */
+
+.ra-story {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  z-index: 20;
+  background-size: cover;
+  background-position: center;
+}
+.ra-story::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(3,3,8,0.96) 5%, rgba(3,3,8,0.55) 55%, rgba(3,3,8,0.35) 100%);
+}
+.ra-story-inner {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px clamp(18px, 5vw, 40px) max(28px, env(safe-area-inset-bottom));
+  animation: ra-slide-up 0.55s var(--ease-out-back) both;
+}
+.ra-story-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.1rem, 4vw, 1.6rem);
+  color: #fff;
+  margin: 0 0 14px;
+  text-shadow: 0 0 20px var(--dim-primary);
+}
+.ra-story-text {
+  font-size: clamp(0.95rem, 2.6vw, 1.1rem);
+  line-height: 1.65;
+  color: rgba(255,255,255,0.92);
+  min-height: 4.5em;
+  white-space: pre-line;
+}
+.ra-story-text .ra-caret {
+  display: inline-block;
+  width: 0.5em;
+  animation: ra-blink 1s steps(1) infinite;
+}
+.ra-story-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+.ra-story-actions .ra-btn { width: auto; padding: 12px 28px; }
+.ra-story-skip { position: absolute; top: 16px; right: 16px; font-size: 0.75rem; color: var(--text-dim); background: none; border: none; text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* ---------- modal (reward / game over / complete) ---------- */
+
+.ra-modal-title {
+  font-size: clamp(1.3rem, 5vw, 1.7rem);
+  text-align: center;
+  margin: 0 0 18px;
+}
+.ra-modal-title.success { color: var(--neon-green); }
+.ra-modal-title.danger { color: var(--neon-red); }
+
+.ra-reward-code {
+  position: relative;
+  padding: 20px 60px 20px 20px;
+  margin: 18px 0;
+  border-radius: var(--radius-md);
+  background: linear-gradient(45deg, var(--neon-green), var(--neon-blue));
+  color: #04040a;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1rem, 4vw, 1.25rem);
+  letter-spacing: 0.04em;
+  word-break: break-all;
+  user-select: all;
+}
+.ra-reward-copy {
+  position: absolute;
+  top: 12px; right: 12px;
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid rgba(4,4,10,0.25);
+  background: rgba(4,4,10,0.14);
+  color: #04040a;
+  text-transform: none;
+}
+
+.ra-stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin: 16px 0;
+  font-size: 0.92rem;
+}
+.ra-stat-grid strong { color: var(--dim-primary); display: block; margin-bottom: 2px; font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* ---------- toast ---------- */
+
+.ra-toast {
+  position: absolute;
+  top: 118px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: min(560px, calc(100vw - 32px));
+  text-align: center;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+  font-size: 0.9rem;
+  z-index: 30;
+  animation: ra-toast-in 0.35s var(--ease-out-back) both;
+}
+
+/* ---------- tutorial hint ---------- */
+
+.ra-tutorial {
+  position: absolute;
+  left: 50%;
+  bottom: max(96px, calc(env(safe-area-inset-bottom) + 96px));
+  transform: translateX(-50%);
+  display: flex;
+  gap: 18px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  z-index: 6;
+}
+.ra-tutorial kbd {
+  font-family: var(--font-display);
+  background: rgba(255,255,255,0.08);
+  padding: 2px 7px;
+  border-radius: 4px;
+  color: #fff;
+}
+
+/* ---------- mobile touch controls ---------- */
+
+.ra-mobile-controls {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 18px;
+  z-index: 15;
+}
+.ra-touch-pad {
+  display: flex;
+  gap: 10px;
+}
+.ra-touch-btn {
+  width: 62px; height: 62px;
+  border-radius: 50%;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  color: #fff;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ra-touch-btn.active { background: rgba(255,255,255,0.18); border-color: var(--dim-primary); }
+.ra-touch-btn--jump {
+  width: 78px; height: 78px;
+  background: linear-gradient(135deg, var(--dim-primary), var(--dim-secondary));
+  color: #05050a;
+  font-size: 1.7rem;
+}
+.ra-touch-pad--right { align-items: flex-end; }
+.ra-touch-btn--dash {
+  width: 54px; height: 54px;
+  align-self: flex-end;
+  margin-bottom: 12px;
+  background: rgba(255,255,255,0.08);
+  font-size: 1.2rem;
+}
+.ra-touch-btn--shoot {
+  width: 54px; height: 54px;
+  align-self: flex-end;
+  margin-bottom: 12px;
+  background: rgba(197,139,255,0.16);
+  border-color: rgba(197,139,255,0.55);
+  font-size: 1.2rem;
+}
+.ra-touch-btn--melee {
+  width: 54px; height: 54px;
+  align-self: flex-end;
+  margin-bottom: 12px;
+  background: rgba(122,217,255,0.16);
+  border-color: rgba(122,217,255,0.55);
+  font-size: 1.2rem;
+}
+
+@media (max-width: 720px) {
+  .ra-hud-group { padding: 6px 10px; gap: 7px; }
+  .ra-hud-sep { display: none; }
+  .ra-tutorial { display: none; }
+  .ra-toast { top: 104px; font-size: 0.82rem; }
+}
+/* Short landscape phones: the HUD and the boss bar have very little vertical
+   room, so tighten both rather than letting them eat the playfield. */
+@media (max-height: 460px) {
+  .ra-hud { padding-top: max(6px, env(safe-area-inset-top)); }
+  .ra-hud-group { padding: 5px 9px; }
+  .ra-energy-orb { width: 13px; height: 13px; }
+  .ra-toast { top: 76px; }
+  .ra-touch-btn { width: 54px; height: 54px; }
+  .ra-touch-btn--jump { width: 66px; height: 66px; }
+}
+
+/* A tablet in landscape is >900px wide AND touch-only: the old width-based
+   rule hid the on-screen controls there and left the game unplayable. Hide
+   them for devices that actually have a precise pointer instead. */
+@media (hover: hover) and (pointer: fine) {
+  .ra-mobile-controls { display: none; }
+}
+
+/* ---------- inter-level quiz ---------- */
+
+.ra-quiz-panel { width: min(500px, 100%); }
+
+.ra-quiz-answers { display: flex; flex-direction: column; gap: 9px; margin: 18px 0 6px; }
+
+.ra-quiz-answer {
+  width: 100%;
+  padding: 13px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.16s var(--ease-out-back), border-color 0.2s ease, background 0.2s ease;
+}
+.ra-quiz-answer:hover:not(.disabled) { transform: translateX(3px); border-color: var(--dim-primary); }
+.ra-quiz-answer.disabled { cursor: default; opacity: 0.6; }
+.ra-quiz-answer.correct {
+  opacity: 1;
+  border-color: var(--neon-green);
+  background: rgba(0,255,136,0.12);
+  color: var(--neon-green);
+  font-weight: 700;
+  animation: ra-value-pop 0.35s var(--ease-out-back) both;
+}
+.ra-quiz-answer.wrong {
+  opacity: 1;
+  border-color: var(--neon-red);
+  background: rgba(255,59,59,0.1);
+  color: var(--neon-red);
+}
+
+.ra-quiz-result {
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin: 6px 0 2px;
+  transition: opacity 0.25s ease;
+}
+.ra-quiz-result.good { color: var(--neon-green); }
+.ra-quiz-result.bad { color: var(--neon-orange); }
+
+.ra-quiz-fact {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+  text-align: center;
+  transition: opacity 0.3s ease;
+  margin: 4px 0 0;
+}
+
+/* ==========================================================================
+   Menu layout: scrollable body + pinned call to action
+   --------------------------------------------------------------------------
+   The panel used to be one long scrolling column, so on a 13" laptop the
+   "Inizia l'avventura" button sat below the fold with no visual hint that
+   the panel scrolled at all — the primary action of the whole product was
+   invisible. The content scrolls now; the CTA never moves.
+   ========================================================================== */
+
+.ra-panel--menu {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+  max-height: min(92vh, 860px);
+  overflow: hidden;
+}
+.ra-menu-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+  /* fades the content out as it passes under the pinned CTA */
+  -webkit-mask-image: linear-gradient(180deg, #000 0, #000 calc(100% - 26px), transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0, #000 calc(100% - 26px), transparent 100%);
+}
+.ra-menu-cta {
+  flex: none;
+  position: relative;
+  padding: 10px 0 clamp(16px, 3vw, 24px);
+  background: linear-gradient(180deg, rgba(18,18,28,0) 0%, var(--glass) 30%, var(--glass) 100%);
+}
+.ra-menu-cta::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -8px; right: -8px;
+  height: 1px;
+  background: var(--glass-border);
+}
+.ra-start-btn { margin: 0; font-size: clamp(0.92rem, 2.6vw, 1.05rem); }
+
+.ra-menu-tagline { margin: 0 0 18px; }
+
+.ra-field-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: center;
+  margin: 10px 0 6px;
+}
+.ra-name-input {
+  width: 100%;
+  padding: 13px 16px;
+  margin: 0 0 8px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  outline: none;
+  text-align: center;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.ra-name-input:focus {
+  border-color: var(--dim-primary);
+  box-shadow: 0 0 0 3px rgba(0,212,255,0.14);
+}
+.ra-name-input::placeholder { color: rgba(242,244,255,0.38); }
+
+/* ==========================================================================
+   Unlocked discount codes
+   ========================================================================== */
+
+.ra-codes {
+  margin: 0 0 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255,210,63,0.35);
+  background: linear-gradient(160deg, rgba(255,210,63,0.10), rgba(255,255,255,0.02));
+  padding: 4px 12px 12px;
+}
+.ra-codes-summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 10px 2px;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--neon-yellow);
+}
+.ra-codes-summary::-webkit-details-marker { display: none; }
+.ra-codes-summary::after { content: ' ▾'; opacity: 0.6; }
+.ra-codes[open] .ra-codes-summary::after { content: ' ▴'; }
+
+.ra-code-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.28);
+  border: 1px solid var(--glass-border);
+}
+.ra-code-main { flex: 1 1 auto; min-width: 0; }
+.ra-code-value {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  color: #fff;
+  word-break: break-all;
+  user-select: all;
+}
+.ra-code-meta { display: block; font-size: 0.72rem; color: var(--neon-green); margin-top: 2px; }
+.ra-code-actions { display: flex; gap: 6px; flex: none; }
+.ra-code-action {
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 9px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  font-size: 1rem;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: border-color 0.2s ease, transform 0.15s ease;
+}
+.ra-code-action:hover { border-color: var(--neon-yellow); transform: translateY(-1px); }
+.ra-codes-hint {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-align: center;
+  margin: 10px 0 0;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+/* ==========================================================================
+   Reward modal extras
+   ========================================================================== */
+
+.ra-reward-code-value { display: block; padding-right: 4px; }
+.ra-reward-line {
+  text-align: center;
+  color: var(--neon-green);
+  font-weight: 700;
+  margin: 14px 0;
+}
+.ra-reward-score { text-align: center; color: var(--neon-blue); margin-top: 14px; }
+.ra-note { font-size: 0.82rem; text-align: center; line-height: 1.55; margin: 10px 0 0; }
+.ra-note strong { color: var(--text-primary); }
+.ra-hint-line { font-size: 0.72rem; color: var(--text-dim); text-align: center; margin: 10px 0 0; }
+.ra-howto p { margin: 0 0 9px; }
+.ra-howto strong { color: var(--dim-primary); }
+
+/* ==========================================================================
+   Boss bar — sits BELOW the HUD instead of on top of it
+   ========================================================================== */
+
+.ra-bossbar {
+  position: absolute;
+  top: calc(max(12px, env(safe-area-inset-top)) + 54px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 18px;
+  border-radius: 14px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+  z-index: 6;
+  min-width: 220px;
+  max-width: min(320px, calc(100vw - 24px));
+  font-family: var(--font-display);
+  transition: border-color 0.3s ease;
+}
+.ra-bossbar-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+  margin-bottom: 5px;
+  color: #fff;
+  line-height: 1.3;
+}
+.ra-bossbar-pips {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.ra-bossbar-pip {
+  width: 18px;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.12);
+  transition: background 0.25s ease;
+}
+.ra-bossbar-pip.filled { background: linear-gradient(90deg, #ff3b3b, #ff8a5c); }
+
+@media (max-width: 720px) {
+  .ra-bossbar { top: calc(max(10px, env(safe-area-inset-top)) + 46px); padding: 6px 12px; min-width: 180px; }
+  .ra-bossbar-label { font-size: 0.62rem; }
+  .ra-bossbar-pip { width: 14px; height: 6px; }
+}
+
+/* ==========================================================================
+   Rotate-your-device prompt (touch, portrait)
+   ========================================================================== */
+
+.ra-rotate {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: radial-gradient(ellipse at 50% 35%, rgba(18,18,38,0.96), rgba(3,3,8,0.99) 75%);
+  backdrop-filter: blur(4px);
+  animation: ra-fade-in 0.3s ease both;
+}
+.ra-rotate-inner { text-align: center; max-width: 340px; }
+.ra-rotate-phone {
+  width: 74px;
+  height: 126px;
+  margin: 0 auto 26px;
+  border-radius: 14px;
+  border: 3px solid var(--neon-blue);
+  box-shadow: 0 0 26px -6px var(--neon-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ra-rotate-hint 2.4s var(--ease-smooth) infinite;
+}
+.ra-rotate-phone-screen {
+  width: 52px;
+  height: 96px;
+  border-radius: 6px;
+  background: linear-gradient(160deg, rgba(0,212,255,0.28), rgba(139,92,246,0.28));
+}
+.ra-rotate-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.15rem;
+  color: #fff;
+  margin: 0 0 10px;
+}
+.ra-rotate-text {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+  margin: 0 0 22px;
+}
+.ra-rotate-dismiss { font-size: 0.78rem; }
+
+@keyframes ra-rotate-hint {
+  0%, 18%   { transform: rotate(0deg); }
+  45%, 72%  { transform: rotate(-90deg); }
+  100%      { transform: rotate(0deg); }
+}
+
+/* ==========================================================================
+   Boot splash / crash note / accessibility helpers
+   ========================================================================== */
+
+#boot-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: radial-gradient(ellipse at 50% 35%, #0c0c1a 0%, #050508 70%);
+  transition: opacity 0.5s ease;
+}
+#boot-splash.is-done { opacity: 0; pointer-events: none; }
+.boot-mark {
+  width: 46px;
+  height: 46px;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #00d4ff, #8b5cf6);
+  clip-path: polygon(50% 0%, 88% 32%, 50% 100%, 12% 32%);
+  animation: ra-boot-pulse 1.4s ease-in-out infinite;
+}
+.boot-title {
+  font-family: 'Orbitron', 'Courier New', monospace;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  font-size: 0.85rem;
+  color: #f2f4ff;
+  margin: 0;
+}
+.boot-sub {
+  font-family: 'Rajdhani', Arial, sans-serif;
+  font-size: 0.78rem;
+  color: rgba(242,244,255,0.5);
+  margin: 0;
+}
+@keyframes ra-boot-pulse {
+  0%, 100% { opacity: 0.45; transform: scale(0.92); }
+  50%      { opacity: 1;    transform: scale(1.06); }
+}
+
+.ra-crash-note {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 70;
+  max-width: min(460px, calc(100vw - 32px));
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgba(40,10,10,0.92);
+  border: 1px solid rgba(255,90,90,0.45);
+  color: #ffe7e7;
+  font-family: 'Rajdhani', Arial, sans-serif;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.ra-sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ra-noscript {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 32px;
+  text-align: center;
+  background: #050508;
+  color: #f2f4ff;
+  font-family: Arial, sans-serif;
+}
+
+/* ==========================================================================
+   Reduced motion
+   --------------------------------------------------------------------------
+   utils/device.js has always exported prefersReducedMotion() and nothing ever
+   used it, while the UI ran several infinite decorative animations (title
+   glow, blinking caret, pulsing map node). Honour the OS setting: kill the
+   decoration, keep the transitions that communicate state.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-title,
+  .boot-mark,
+  .ra-rotate-phone,
+  .ra-story-text .ra-caret,
+  .ra-victory-title,
+  .ra-victory-trophy {
+    animation: none !important;
+  }
+  .ra-screen,
+  .ra-panel,
+  .ra-story-inner,
+  .ra-anim-slide-up,
+  .ra-toast {
+    animation-duration: 0.001s !important;
+  }
+  .ra-btn:hover,
+  .ra-class-card:hover,
+  .ra-quiz-answer:hover:not(.disabled),
+  button.ra-map-node:hover {
+    transform: none;
+  }
+  * { scroll-behavior: auto !important; }
+}
+
+/* ==========================================================================
+   Fixes found during visual QA
+   ========================================================================== */
+
+/* `.ra-touch-btn { display: flex }` is an author rule, so it beat the user
+   agent's `[hidden] { display: none }` — the ranged-fire button was visible
+   on mobile from level 1 even though the ability is only granted in the
+   final arena. (Pre-existing bug, caught by screenshotting the real page.) */
+.ra-touch-btn[hidden] { display: none !important; }
+
+/* Keep transient messages clear of the boss health bar when both are up.
+   They are siblings in #ui-root and the bar is always mounted first. */
+.ra-bossbar ~ .ra-toast { top: 132px; }
+@media (max-width: 720px) { .ra-bossbar ~ .ra-toast { top: 114px; } }
+@media (max-height: 460px) { .ra-bossbar ~ .ra-toast { top: 96px; } }
+
+/* Short viewports: tighten the menu so the map, the name field and the
+   classes all stay reachable without a long scroll. */
+@media (max-height: 700px) {
+  .ra-menu-logo { font-size: clamp(1.5rem, 5vw, 2rem); }
+  .ra-menu-tagline { font-size: 0.85rem; margin-bottom: 12px; }
+  .ra-map { margin: 10px 0 14px; padding: 10px 8px 6px; }
+  .ra-panel--menu { padding-top: clamp(14px, 2.5vw, 24px); }
+  .ra-class-card { padding: 9px 6px; }
+  .ra-class-icon { font-size: 1.3rem; }
+}

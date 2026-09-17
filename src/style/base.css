@@ -1,0 +1,67 @@
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--dark-bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
+#app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 20%, #0c0c1a 0%, var(--dark-bg) 70%);
+}
+
+#game-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+#ui-root {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+#ui-root > * {
+  pointer-events: auto;
+}
+
+button, a {
+  font-family: var(--font-display);
+  cursor: pointer;
+  touch-action: manipulation;   /* no double-tap zoom on controls */
+}
+
+/* Set by core/quality.js from prefers-reduced-motion, so JS-driven effects
+   (victory fireworks, canvas fades) can honour the same setting the CSS does. */
+.ra-reduce-motion #game-canvas { transition: none !important; }
+
+::selection {
+  background: var(--dim-primary);
+  color: #05050a;
+}
+
+/* thin scrollbar for any overflowing panels */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--dim-primary) transparent;
+}
+*::-webkit-scrollbar { width: 6px; }
+*::-webkit-scrollbar-thumb { background: var(--dim-primary); border-radius: 3px; }

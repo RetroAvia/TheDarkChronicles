@@ -1,0 +1,52 @@
+:root {
+  --neon-blue: #00d4ff;
+  --neon-purple: #8b5cf6;
+  --neon-green: #00ff88;
+  --neon-orange: #ff6b35;
+  --neon-red: #ff3b3b;
+  --neon-cyan: #00ffff;
+  --neon-pink: #ff0080;
+  --neon-yellow: #ffd23f;
+
+  --dark-bg: #050508;
+  --dark-surface: #12121c;
+  --dark-accent: #1a1f33;
+
+  --glass: rgba(18, 18, 28, 0.62);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.06);
+
+  --text-primary: #f2f4ff;
+  --text-dim: rgba(242, 244, 255, 0.62);
+
+  /* Google Fonts are loaded non-blocking (see index.html). These fallbacks
+     are what the game actually renders with until — or if — they arrive, so
+     they are chosen to sit close in width and feel, not just "some font". */
+  --font-display: 'Orbitron', 'Eurostile', 'Bahnschrift', 'DIN Alternate', 'Segoe UI', 'Courier New', monospace;
+  --font-body: 'Rajdhani', 'Segoe UI Semibold', 'Avenir Next Condensed', 'Roboto Condensed', 'Segoe UI', Arial, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* per-dimension accent, swapped at runtime via data-dimension on #app */
+  --dim-primary: var(--neon-blue);
+  --dim-secondary: var(--neon-purple);
+}
+
+/* One entry per dimension, matching world/palettes.js. Dimensions 6, 7 and 8
+   were missing entirely: Zeta, Eta and Omega fell back to the cyan default,
+   so the whole interface stayed blue while the level on screen was purple,
+   gold or blood red. */
+#app[data-dimension="0"] { --dim-primary: #00d4ff; --dim-secondary: #8b5cf6; } /* tutorial: reuses Alpha */
+#app[data-dimension="1"] { --dim-primary: #00d4ff; --dim-secondary: #8b5cf6; } /* alpha   */
+#app[data-dimension="2"] { --dim-primary: #00ff88; --dim-secondary: #00d4ff; } /* beta    */
+#app[data-dimension="3"] { --dim-primary: #ff6b35; --dim-secondary: #ff0080; } /* gamma   */
+#app[data-dimension="4"] { --dim-primary: #ffd23f; --dim-secondary: #00ffff; } /* delta   */
+#app[data-dimension="5"] { --dim-primary: #28c8ff; --dim-secondary: #00ff88; } /* epsilon */
+#app[data-dimension="6"] { --dim-primary: #c15cff; --dim-secondary: #ff0080; } /* zeta    */
+#app[data-dimension="7"] { --dim-primary: #ffe066; --dim-secondary: #ff6b35; } /* eta     */
+#app[data-dimension="8"] { --dim-primary: #ff3b3b; --dim-secondary: #8b5cf6; } /* omega   */
